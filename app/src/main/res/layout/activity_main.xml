@@ -36,6 +36,7 @@
         android:tint="#fff"
         android:layout_gravity="bottom|end"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:onClick="abrirCadastro"
         />
 
 

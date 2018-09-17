@@ -10,6 +10,8 @@ public class Utils {
 
     public static final String DATABASE_NAME = "mybooks.db";
 
+
+    //metódo que pega o bitmap(binário da imagem) da imagem e transforma em um array de bits
     public static byte[] toByteArray( Bitmap bitmap){
 
         ByteArrayOutputStream blob = new ByteArrayOutputStream();
@@ -18,7 +20,11 @@ public class Utils {
         return blob.toByteArray();
     }
 
+
+
+    //metódo que pega a imagem  da pasta res e transforma em um array de bits
     public static byte[] toByteArray(Resources res,  int imgResource){
+
         Bitmap bitmap = BitmapFactory.decodeResource(res, imgResource);
 
         ByteArrayOutputStream blob = new ByteArrayOutputStream();
@@ -26,6 +32,8 @@ public class Utils {
 
         return blob.toByteArray();
     }
+
+
 
 
     public static Bitmap toBitmap(byte[] imagem){

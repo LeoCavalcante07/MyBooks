@@ -1,5 +1,6 @@
 package br.com.senaijandira.mybooks;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         //Criação livro fake
 
         livros = new Livro[]{
+/*
                 new Livro(1, Utils.toByteArray(getResources(), R.drawable.pequeno_principe),
                         "O pequeno principe", getString(R.string.pequeno_principe)),
 
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                         "Cinquenta tons de cinza", getString(R.string.pequeno_principe)),
 
                 new Livro(3, Utils.toByteArray(getResources(), R.drawable.kotlin_android),
-                        "Kotlin com android", getString(R.string.pequeno_principe))
+                        "Kotlin com android", getString(R.string.pequeno_principe))*/
 
 
         };
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void criarLivro(Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro
+    public void criarLivro(Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
 
         View v = LayoutInflater.from(this).inflate(R.layout.livro_layout, root,  false);//carrega o template livro_layout na variavel v
 
@@ -72,5 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         root.addView(v);
+    }
+
+    public void abrirCadastro(View view) {
+        startActivity(new Intent(this, CadastroActivity.class));
+
     }
 }
