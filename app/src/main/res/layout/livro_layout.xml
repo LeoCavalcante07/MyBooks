@@ -15,6 +15,8 @@
             android:orientation="horizontal"
             >
 
+            
+
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="150dp"
@@ -22,8 +24,11 @@
                 android:id="@+id/imgLivroCapa"
                 android:src="@drawable/pequeno_principe"
                 />
+
+            <!-- layout_weight -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="5dp">
@@ -32,7 +37,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="O pequeno principe  "
-
                     android:textSize="18sp"
                     android:id="@+id/txtLivroTitulo" />
 
@@ -45,6 +49,13 @@
                     />
 
             </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_delete_black_18dp"
+                android:id="@+id/imgDeleteLivro"
+                />
 
         </LinearLayout>
 

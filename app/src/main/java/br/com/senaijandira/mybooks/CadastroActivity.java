@@ -1,20 +1,20 @@
 package br.com.senaijandira.mybooks;
 
 import android.app.Activity;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.InputStream;
-import java.util.Arrays;
 
+import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
 
 public class CadastroActivity extends AppCompatActivity {
@@ -26,14 +26,20 @@ public class CadastroActivity extends AppCompatActivity {
 
     private final int COD_REQ_GALERY = 101;
 
+    MyBooksDatabase myBooksDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+
+        myBooksDb = Room.databaseBuilder(getApplicationContext(), MyBooksDatabase.class, Utils.DATABASE_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
+
         imgLivroCapa = findViewById(R.id.imgLivroCapa);
         txtTitulo = findViewById(R.id.txtTitulo);
         txtDescricao = findViewById(R.id.txtDescricao);
+
 
     }
 
@@ -91,23 +97,25 @@ public class CadastroActivity extends AppCompatActivity {
             //Ao salvar o livro que acabou de ser cadastrado cria-se um novo livro
             Livro livro = new Livro(0, capa, titulo, descricao);
 
-            x++;
 
-            int tamanhoArray = MainActivity.livros.length;
+
+            //Insere na variavelestática do MainACtivity
+            /*int tamanhoArray = MainActivity.livros.length;
 
             MainActivity.livros = Arrays.copyOf(MainActivity.livros, tamanhoArray+1);
 
-            MainActivity.livros[tamanhoArray] = livro;
+            MainActivity.livros[tamanhoArray] = livro;*/
 
-            if(MainActivity.livros.length == x){
+            //Inserir no banco de dados
+            myBooksDb.daoLivro().inserir(livro);
+
+           /* if(MainActivity.livros.length == x){
                 alert("Parabéns", "Livro Cadastrado com sucesso!");
             }else{
                 alert("Deu pau", "ocorreu um erro na gravação!");
             }
 
-
-
-
+        x++;*/
 
     }
 

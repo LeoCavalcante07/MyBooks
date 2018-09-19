@@ -1,9 +1,18 @@
 package br.com.senaijandira.mybooks.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity
+
 public class Livro {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    //a capa é uma foto  e para ser guardada no banco, será gravado os bytes da foto, no caso um array de bytes
-    private byte[] capa;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] capa; //a capa é uma foto  e para ser guardada no banco, será gravado os bytes da foto, no caso um array de bytes
     private String titulo;
     private String descricao;
 

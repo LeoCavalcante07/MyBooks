@@ -1,5 +1,6 @@
 package br.com.senaijandira.mybooks;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,10 +20,16 @@ public class MainActivity extends AppCompatActivity {
 
     public static Livro[] livros;
 
+    //Variavel de acesso ao Bnaco
+    private MyBooksDatabase myBooksDb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Criado a instancia do banco de dados
+        myBooksDb = Room.databaseBuilder(getApplicationContext(), MyBooksDatabase.class, Utils.DATABASE_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
         listaLivros = findViewById(R.id.listaLivros);
 
@@ -50,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        //Aqui faz um select no banco
+        livros = myBooksDb.daoLivro().selecionarTodos();
+
         listaLivros.removeAllViews();
 
         //a cada livro no array Livros[], cria um novo livro
@@ -59,13 +70,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void criarLivro(Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
+    // para apagar o livro precisa do objeto livro e do template que contem as inf do livro  que esta contido na variavel v
+    private void deletarLivro(Livro livro, View v){
 
-        View v = LayoutInflater.from(this).inflate(R.layout.livro_layout, root,  false);//carrega o template livro_layout na variavel v
+        //deletar livro do banco
+        myBooksDb.daoLivro().deletar(livro);
+
+        //remover o item (template onde está as informações do livro) da tela
+        listaLivros.removeView(v);
+
+
+
+    }
+
+
+    public void criarLivro(final Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
+
+        final View v = LayoutInflater.from(this).inflate(R.layout.livro_layout, root,  false);//carrega o template livro_layout na variavel v
 
         ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
         TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
         TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
+
+        ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
+
+        imgDeleteLivro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletarLivro(livro, v);
+            }
+        });
 
 
         imgLivroCapa.setImageBitmap(Utils.toBitmap(livro.getCapa()));
