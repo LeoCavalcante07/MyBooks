@@ -1,11 +1,10 @@
 package br.com.senaijandira.mybooks.model;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity
+@Entity(foreignKeys = @ForeignKey(entity = Livro.class, parentColumns = "id", childColumns = "idLivro"))
 public class LivroLido {
 
    @PrimaryKey(autoGenerate = true)
@@ -14,7 +13,8 @@ public class LivroLido {
 
 
 
-    @ForeignKey(entity = Livro.class, String[] parentColumns = ["id"], childColumns = ["idLivro"]);
+    //@ForeignKey(entity = Livro.class, String[] parentColumns = ["id"], childColumns = ["idLivro"]);
+
     private int idLivro;
 
     //Construtor

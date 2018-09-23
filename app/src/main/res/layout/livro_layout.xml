@@ -30,7 +30,7 @@
                     android:src="@drawable/pequeno_principe"
                     />
 
-                <!-- layout_weight -->
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
