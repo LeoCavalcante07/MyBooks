@@ -17,9 +17,14 @@ public interface LivroDao {
     @Update
     void atualizar(Livro livro);
 
+
     @Delete
     void deletar(Livro livro);
 
     @Query("select * from livro")
     Livro[] selecionarTodos();
+
+    //saber qual o status do livro
+    @Query("select statusLivro from livro")
+    char[] selecionarStatus();
 }

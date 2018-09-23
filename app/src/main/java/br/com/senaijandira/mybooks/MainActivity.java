@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout listaLivros;
 
+
+
     public static Livro[] livros;
 
     //Variavel de acesso ao Bnaco
@@ -31,7 +33,13 @@ public class MainActivity extends AppCompatActivity {
         //Criado a instancia do banco de dados
         myBooksDb = Room.databaseBuilder(getApplicationContext(), MyBooksDatabase.class, Utils.DATABASE_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
+
+
         listaLivros = findViewById(R.id.listaLivros);
+
+
+
+
 
 
         //Criação livro fake
@@ -83,8 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //MÉTODO QUE ATUALIZA O STATUS DO LIVRO, PARA SABERMOS SE ELE ESTA PARA SER LIDO OU SE JÁ FOI LIDO
+    private void atualizarStatusLivro(Livro livro){
+
+        livro.setStatusLivro('2');//com status 2 sabemos que o livro ja foi lido
+
+        myBooksDb.daoLivro().atualizar(livro);
+
+    }
+
 
     public void criarLivro(final Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
+
+
 
         final View v = LayoutInflater.from(this).inflate(R.layout.livro_layout, root,  false);//carrega o template livro_layout na variavel v
 
@@ -93,7 +112,10 @@ public class MainActivity extends AppCompatActivity {
         TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
 
         ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
+        TextView txtLivroLido = v.findViewById(R.id.txtLivroLido);
 
+
+        //ASSIM QUE UM LIVRO FOR CRIADO ELE JÁ VEM COM OS METODOS ONCLICK PARA CHAMAR O ATUALIZA E O DELETAR
         imgDeleteLivro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,9 +124,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        txtLivroLido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                atualizarStatusLivro(livro);
+            }
+        });
+
+
         imgLivroCapa.setImageBitmap(Utils.toBitmap(livro.getCapa()));
         txtLivroTitulo.setText(livro.getTitulo());
         txtLivroDescricao.setText(livro.getDescricao());
+
+        final int idLivro = livro.getId();
 
 
         root.addView(v);
@@ -114,4 +146,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(this, CadastroActivity.class));
 
     }
+
+
+
+
+
 }

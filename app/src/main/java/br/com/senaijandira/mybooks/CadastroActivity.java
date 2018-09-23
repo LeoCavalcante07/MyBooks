@@ -17,7 +17,7 @@ import java.io.InputStream;
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
 
-public class CadastroActivity extends AppCompatActivity {
+public class  CadastroActivity extends AppCompatActivity {
 
     Bitmap livroCapa;
     ImageView imgLivroCapa;
@@ -95,7 +95,7 @@ public class CadastroActivity extends AppCompatActivity {
             String descricao = txtDescricao.getText().toString();
 
             //Ao salvar o livro que acabou de ser cadastrado cria-se um novo livro
-            Livro livro = new Livro(0, capa, titulo, descricao);
+            Livro livro = new Livro(0, capa, titulo, descricao, '0');
 
 
 

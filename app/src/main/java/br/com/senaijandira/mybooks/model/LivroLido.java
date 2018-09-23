@@ -2,13 +2,12 @@ package br.com.senaijandira.mybooks.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Livro.class, parentColumns = "id", childColumns = "idLivro"))
-public class LivroLido {
+public class LivroLido extends Livro {
 
-   @PrimaryKey(autoGenerate = true)
-    private int id;
+  // @PrimaryKey(autoGenerate = true)
+    //private int id;
 
 
 
@@ -17,30 +16,15 @@ public class LivroLido {
 
     private int idLivro;
 
-    //Construtor
-    public LivroLido(){
-
+    public int getLivro(){
+        return idLivro;
     }
 
-    //Construtor
-    public LivroLido(int id){
-
-        this.id = id;
-
-
+    public void setIdLivro(int idLivro){
+        this.idLivro = idLivro;
     }
 
 
-
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
 }
