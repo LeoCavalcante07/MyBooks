@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         livro.setStatusLivro('2');//com status 2 sabemos que o livro ja foi lido
 
         myBooksDb.daoLivro().atualizar(livro);
+        System.out.print(livro.getStatusLivro());
 
     }
 
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
 
         ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
-        TextView txtLivroLido = v.findViewById(R.id.txtLivroLido);
+        Button btnLivroLido = v.findViewById(R.id.btnLivroLido);
 
 
         //ASSIM QUE UM LIVRO FOR CRIADO ELE JÁ VEM COM OS METODOS ONCLICK PARA CHAMAR O ATUALIZA E O DELETAR
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        txtLivroLido.setOnClickListener(new View.OnClickListener() {
+        btnLivroLido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 atualizarStatusLivro(livro);
@@ -148,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
+    public void abrirLivrosLidos(View view2) {
+        startActivity(new Intent(this, LivroLidoActivity.class));
+    }
 }

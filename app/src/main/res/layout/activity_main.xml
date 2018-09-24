@@ -28,7 +28,7 @@
 
 
     <!-- o pipe | serve para juntar os negocios-->
-    <android.support.design.widget.FloatingActionButton
+   <!-- <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -37,6 +37,23 @@
         android:layout_gravity="bottom|end"
         android:backgroundTint="@color/colorPrimaryDark"
         android:onClick="abrirCadastro"
+        />-->
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:layout_marginLeft="250dp"
+        android:text="Cadastrar"
+        android:onClick="abrirCadastro"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="450dp"
+        android:text="Livros Lidos"
+        android:onClick="abrirLivrosLidos"
         />
 
 
