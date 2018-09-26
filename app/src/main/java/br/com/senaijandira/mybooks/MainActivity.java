@@ -1,16 +1,23 @@
 package br.com.senaijandira.mybooks;
 
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
@@ -19,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout listaLivros;
 
+    LivrosAdapter adapter;
 
+    ListView listViewLivros;
 
     public static Livro[] livros;
 
@@ -36,8 +45,11 @@ public class MainActivity extends AppCompatActivity {
         myBooksDb = Room.databaseBuilder(getApplicationContext(), MyBooksDatabase.class, Utils.DATABASE_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
 
+        listViewLivros = findViewById(R.id.listViewLivros);
+        adapter = new LivrosAdapter(this);
+        listViewLivros.setAdapter(adapter);
 
-        listaLivros = findViewById(R.id.listaLivros);
+        //listaLivros = findViewById(R.id.listaLivros);
 
 
 
@@ -60,8 +72,60 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
+        carregarLivros();
+    }
+
+
+    public void carregarLivros(){
+        //Aqui faz um select no banco
+        livros = myBooksDb.daoLivro().selecionarTodos();
+
+        adapter.addAll(livros);
+
+
+
 
     }
+
+
+
+    public class LivrosAdapter extends ArrayAdapter<Livro>{
+        public LivrosAdapter(Context context){
+            super(context, 0, new ArrayList<Livro>());
+
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            View v = convertView;
+
+            if(v == null){
+                v = LayoutInflater.from(getContext()).inflate(R.layout.livro_layout, parent, false); //CARREGA O CONTEUDO DO TEMPLATE DOS LIVROS NA VARIAVEL v
+            }
+
+            Livro livro = getItem(position);
+
+            //criarLivro(livro);
+
+            ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
+            TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
+            TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
+
+           // ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
+           // Button btnLivroLido = v.findViewById(R.id.btnLivroLido);
+
+
+
+            imgLivroCapa.setImageBitmap(Utils.toBitmap(livro.getCapa()));
+            txtLivroTitulo.setText(livro.getTitulo());
+            txtLivroDescricao.setText(livro.getDescricao());
+
+
+            return v;
+        }
+    }
+
 
 
     @Override
@@ -70,15 +134,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //Aqui faz um select no banco
-        livros = myBooksDb.daoLivro().selecionarTodos();
 
-        listaLivros.removeAllViews();
+
+       //listaLivros.removeAllViews();
 
         //a cada livro no array Livros[], cria um novo livro
-        for(Livro livro : livros){
+       /* for(Livro livro : livros){
             criarLivro(livro, listaLivros);
-        }
+        }*/
 
     }
 
@@ -146,6 +209,8 @@ public class MainActivity extends AppCompatActivity {
 
         root.addView(v);
     }
+
+
 
     public void abrirCadastro(View view) {
         startActivity(new Intent(this, CadastroActivity.class));
