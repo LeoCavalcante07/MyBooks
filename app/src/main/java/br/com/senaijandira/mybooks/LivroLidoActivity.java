@@ -57,14 +57,14 @@ public class LivroLidoActivity extends Activity{
         int i = 0;
 
         if(livros.length != 0){
-            while(i <= livros.length){//loooping que verifica todos os livros do array
+            while(i <= livros.length-1){//loooping que verifica todos os livros do array
 
                 Livro livroLido = livros[i];// a cada volta cria-se um livor que será criado como livro lido caso seu status seja igual a 2
                 if(statusLivro[i] == '2'){ //caso se cumpra essa condição significa o livro deve ser carregado como livro lido
                     criarLivroLido(livroLido, listaLivrosLidos);
-                }else{
-                    alert("nao foi", "deu ruim");
                 }
+
+                i++;
             }
         }
 
