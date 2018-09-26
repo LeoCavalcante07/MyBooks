@@ -27,4 +27,8 @@ public interface LivroDao {
     //saber qual o status do livro
     @Query("select statusLivro from livro")
     char[] selecionarStatus();
+
+    //SEELCIONAR TODOS LIVROS LIDOS
+    @Query("select * from livro where statusLivro = 2")
+    Livro[] selecionarTodosLivrosLidos();
 }

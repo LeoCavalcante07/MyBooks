@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,9 +23,7 @@ import br.com.senaijandira.mybooks.model.Livro;
 
 public class MainActivity extends AppCompatActivity {
 
-    LinearLayout listaLivros;
-
-    LivrosAdapter adapter;
+    LivrosAdapter livrosAdapter;
 
     ListView listViewLivros;
 
@@ -46,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         listViewLivros = findViewById(R.id.listViewLivros);
-        adapter = new LivrosAdapter(this);
-        listViewLivros.setAdapter(adapter);
+        livrosAdapter = new LivrosAdapter(this);
+        listViewLivros.setAdapter(livrosAdapter);
 
         //listaLivros = findViewById(R.id.listaLivros);
 
@@ -80,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         //Aqui faz um select no banco
         livros = myBooksDb.daoLivro().selecionarTodos();
 
-        adapter.addAll(livros);
+        livrosAdapter.addAll(livros);
 
 
 
@@ -90,9 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public class LivrosAdapter extends ArrayAdapter<Livro>{
+
         public LivrosAdapter(Context context){
             super(context, 0, new ArrayList<Livro>());
-
         }
 
         @NonNull
@@ -106,26 +103,57 @@ public class MainActivity extends AppCompatActivity {
 
             Livro livro = getItem(position);
 
-            //criarLivro(livro);
-
-            ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
-            TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
-            TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
-
-           // ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
-           // Button btnLivroLido = v.findViewById(R.id.btnLivroLido);
-
-
-
-            imgLivroCapa.setImageBitmap(Utils.toBitmap(livro.getCapa()));
-            txtLivroTitulo.setText(livro.getTitulo());
-            txtLivroDescricao.setText(livro.getDescricao());
-
+            criarLivro(livro, v);
 
             return v;
         }
     }
 
+
+    public void criarLivro(final Livro livro, View v){
+
+        ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
+        TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
+        TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
+        TextView txtLivrolido = v.findViewById(R.id.txtLivroLido);
+        TextView txtLivrosParaler = v.findViewById(R.id.txtLivrosParaLer);
+
+        ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
+
+
+        imgDeleteLivro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletarLivro(livro);
+            }
+        });
+
+
+
+        //click listener para adc Livro para ler
+        txtLivrosParaler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                atualizarStatusLivro(livro, 1);
+            }
+        });
+
+
+        //click listener para adc Livro lido
+        txtLivrolido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                atualizarStatusLivro(livro, 2);
+            }
+        });
+
+
+
+
+        imgLivroCapa.setImageBitmap(Utils.toBitmap(livro.getCapa()));
+        txtLivroTitulo.setText(livro.getTitulo());
+        txtLivroDescricao.setText(livro.getDescricao());
+    }
 
 
     @Override
@@ -146,30 +174,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // para apagar o livro precisa do objeto livro e do template que contem as inf do livro  que esta contido na variavel v
-    private void deletarLivro(Livro livro, View v){
+    private void deletarLivro(Livro livro){
 
         //deletar livro do banco
         myBooksDb.daoLivro().deletar(livro);
 
+        livrosAdapter.remove(livro);
         //remover o item (template onde está as informações do livro) da tela
-        listaLivros.removeView(v);
+        //listaLivros.removeView(v);
+        //listViewLivros.removeView(v);
 
 
 
     }
 
     //MÉTODO QUE ATUALIZA O STATUS DO LIVRO, PARA SABERMOS SE ELE ESTA PARA SER LIDO OU SE JÁ FOI LIDO
-    private void atualizarStatusLivro(Livro livro){
+    private void atualizarStatusLivro(Livro livro, int opt){
 
-        livro.setStatusLivro('2');//com status 2 sabemos que o livro ja foi lido
+        if(opt == 1){
+            livro.setStatusLivro('1');//com status 1 sabemos que o livro está para ser lido
+        }else if(opt == 2){
+            livro.setStatusLivro('2');//com status 2 sabemos que o livro ja foi lido
+        }
 
         myBooksDb.daoLivro().atualizar(livro);
-        System.out.print(livro.getStatusLivro());
-
     }
 
 
-    public void criarLivro(final Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
+   /* public void criarLivro(final Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
 
 
 
@@ -208,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         root.addView(v);
-    }
+    }*/
 
 
 

@@ -79,12 +79,12 @@
 
                     />
 
-                <Button
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Livros lidos"
                     android:layout_marginLeft="50dp"
-                    android:id="@+id/btnLivroLido"
+                    android:id="@+id/txtLivroLido"
 
 
                     />
