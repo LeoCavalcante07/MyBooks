@@ -7,37 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <include layout="@layout/menu_layout">
 
-        <LinearLayout
+    </include>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp">
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/listaLivros">
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/listaLivros">
 
 
-            <!-- chama o template
-            <include layout="@layout/livro_layout"/>
-            -->
+                <!-- chama o template
+                <include layout="@layout/livro_layout"/>
+                -->
 
 
-        </LinearLayout>
-    </ScrollView>
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+
+
+
 
 
     <!-- o pipe | serve para juntar os negocios-->
-   <!-- <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:tint="#fff"
-        android:layout_gravity="bottom|end"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:onClick="abrirCadastro"
-        />-->
+    <!-- <android.support.design.widget.FloatingActionButton
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="16dp"
+         app:srcCompat="@android:drawable/ic_input_add"
+         android:tint="#fff"
+         android:layout_gravity="bottom|end"
+         android:backgroundTint="@color/colorPrimaryDark"
+         android:onClick="abrirCadastro"
+         />-->
 
     <Button
         android:layout_width="wrap_content"
@@ -48,13 +64,7 @@
         android:onClick="abrirCadastro"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
-        android:text="Livros Lidos"
-        android:onClick="abrirLivrosLidos"
-        />
+
 
 
 
