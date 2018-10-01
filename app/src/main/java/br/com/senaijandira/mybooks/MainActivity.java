@@ -2,10 +2,12 @@ package br.com.senaijandira.mybooks;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -191,9 +193,19 @@ public class MainActivity extends AppCompatActivity {
     private void atualizarStatusLivro(Livro livro, int opt){
 
         if(opt == 1){
-            livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido
+            if(livro.getStatusLivro() == 2){
+                alert(livro, "Erro", "Não é possivel adicionar um livro já lido para a tela de livros para ler", "Mudar mesmo assim", "Cancelar");
+            }else{
+                livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido
+            }
+
         }else if(opt == 2){
-            livro.setStatusLivro(2);//com status 2 sabemos que o livro ja foi lido
+            if(livro.getStatusLivro() == 1){
+                alert(livro,"Erro", "Não é possivel adicionar um livro já lido para a tela de livros para ler", "OK", null);
+            }else{
+                livro.setStatusLivro(2);//com status 2 sabemos que o livro ja foi lido
+            }
+
         }
 
         myBooksDb.daoLivro().atualizar(livro);
@@ -201,46 +213,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-   /* public void criarLivro(final Livro livro, ViewGroup root){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
 
-
-
-        final View v = LayoutInflater.from(this).inflate(R.layout.livro_layout, root,  false);//carrega o template livro_layout na variavel v
-
-        ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
-        TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
-        TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
-
-        ImageView imgDeleteLivro = v.findViewById(R.id.imgDeleteLivro);
-        Button btnLivroLido = v.findViewById(R.id.btnLivroLido);
-
-
-        //ASSIM QUE UM LIVRO FOR CRIADO ELE JÁ VEM COM OS METODOS ONCLICK PARA CHAMAR O ATUALIZA E O DELETAR
-        imgDeleteLivro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deletarLivro(livro, v);
-            }
-        });
-
-
-        btnLivroLido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                atualizarStatusLivro(livro);
-            }
-        });
-
-
-        imgLivroCapa.setImageBitmap(Utils.toBitmap(livro.getCapa()));
-        txtLivroTitulo.setText(livro.getTitulo());
-        txtLivroDescricao.setText(livro.getDescricao());
-
-        final int idLivro = livro.getId();
-
-
-        root.addView(v);
-    }*/
 
 
 
@@ -261,6 +234,56 @@ public class MainActivity extends AppCompatActivity {
 
     public void abrirLivrosLer(View view3) {
         startActivity(new Intent(this, LivroLerActivity.class));
+    }
+
+
+
+
+    // o metodo recebe um objeto do tipo livro pois o usuario podera mudar o status do livro, caso ele queira
+    public void alert(final Livro livro, String titulo, String mensagem, final String positive, final String negative){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle(titulo);
+        alertDialogBuilder.setMessage(mensagem);
+
+        //caso o usuario queira forçar a mudança do status do livro entra aqui
+        alertDialogBuilder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
+
+
+            public void onClick(final DialogInterface dialog, int which) {
+
+                alert(livro, "Atenção", "Isso fará com que o livro saia da lista de livros lidos. Deseja continuar?", "Continuar", "Cancelar");
+
+                //caso o usuario confirme a mudança do status,  entra aqui
+                alertDialogBuilder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialogInterface, int wich) {
+                        livro.setStatusLivro(1);
+                    }
+                });
+
+
+                //caso  o usuario mude de ideia e queria cancelar a mudança de status
+                alertDialogBuilder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int wich) {
+                        //dialogInterface.dismiss();
+                        livro.setStatusLivro(1);
+                    }
+                });
+
+
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialogBuilder.show();
     }
 
 }
