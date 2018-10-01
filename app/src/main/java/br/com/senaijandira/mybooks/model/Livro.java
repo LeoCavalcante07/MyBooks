@@ -15,7 +15,7 @@ public class Livro {
     private byte[] capa; //a capa é uma foto  e para ser guardada no banco, será gravado os bytes da foto, no caso um array de bytes
     private String titulo;
     private String descricao;
-    private char statusLivro; //se 0 o livro não é nem lido nem para ler, se 1, o livro é para ler e se 2 o livro é lido
+    private int statusLivro; //se 0 o livro não é nem lido nem para ler, se 1, o livro é para ler e se 2 o livro é lido
 
 
 
@@ -25,7 +25,7 @@ public class Livro {
     }
 
     //Construtor
-    public Livro(int id, byte[] capa, String titulo, String descricao, char statusLivro){
+    public Livro(int id, byte[] capa, String titulo, String descricao, int statusLivro){
 
         this.id = id;
         this.capa = capa;
@@ -71,11 +71,11 @@ public class Livro {
         this.descricao = descricao;
     }
 
-    public char getStatusLivro() {
+    public int getStatusLivro() {
         return statusLivro;
     }
 
-    public void setStatusLivro(char statusLivro) {
+    public void setStatusLivro(int statusLivro) {
         this.statusLivro = statusLivro;
     }
 }

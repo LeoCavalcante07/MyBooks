@@ -31,4 +31,7 @@ public interface LivroDao {
     //SEELCIONAR TODOS LIVROS LIDOS
     @Query("select * from livro where statusLivro = 2")
     Livro[] selecionarTodosLivrosLidos();
+
+    @Query("select * from livro where statusLivro = 1")
+    Livro[] selecionarTodosLivroLer();
 }

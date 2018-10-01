@@ -69,18 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
         };
 
-        carregarLivros();
+
     }
 
 
     public void carregarLivros(){
         //Aqui faz um select no banco
         livros = myBooksDb.daoLivro().selecionarTodos();
-
+        livrosAdapter.clear();
         livrosAdapter.addAll(livros);
-
-
-
 
     }
 
@@ -95,17 +92,18 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            View v = convertView;
+            View view = convertView;
 
-            if(v == null){
-                v = LayoutInflater.from(getContext()).inflate(R.layout.livro_layout, parent, false); //CARREGA O CONTEUDO DO TEMPLATE DOS LIVROS NA VARIAVEL v
+
+            if(view == null){
+                view = LayoutInflater.from(getContext()).inflate(R.layout.livro_layout, parent, false); //CARREGA O CONTEUDO DO TEMPLATE DOS LIVROS NA VARIAVEL view
             }
 
             Livro livro = getItem(position);
 
-            criarLivro(livro, v);
+            criarLivro(livro, view);
 
-            return v;
+            return view;
         }
     }
 
@@ -161,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
 
+        carregarLivros();
 
 
 
@@ -192,12 +191,13 @@ public class MainActivity extends AppCompatActivity {
     private void atualizarStatusLivro(Livro livro, int opt){
 
         if(opt == 1){
-            livro.setStatusLivro('1');//com status 1 sabemos que o livro está para ser lido
+            livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido
         }else if(opt == 2){
-            livro.setStatusLivro('2');//com status 2 sabemos que o livro ja foi lido
+            livro.setStatusLivro(2);//com status 2 sabemos que o livro ja foi lido
         }
 
         myBooksDb.daoLivro().atualizar(livro);
+
     }
 
 
@@ -250,7 +250,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void abrirMainActivity(View view) {
+
+    }
+
     public void abrirLivrosLidos(View view2) {
         startActivity(new Intent(this, LivroLidoActivity.class));
     }
+
+
+    public void abrirLivrosLer(View view3) {
+        startActivity(new Intent(this, LivroLerActivity.class));
+    }
+
 }

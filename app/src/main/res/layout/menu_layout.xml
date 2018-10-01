@@ -25,6 +25,7 @@
             android:background="@color/black"
             android:textColor="@color/cardview_light_background"
             android:id="@+id/btnTab2"
+            android:onClick="abrirLivrosLer"
             />
 
         <Button

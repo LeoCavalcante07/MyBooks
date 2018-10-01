@@ -3,13 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardCornerRadius="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             >
 
 
@@ -23,7 +26,7 @@
                     android:layout_width="100dp"
                     android:layout_height="150dp"
                     android:layout_marginRight="15dp"
-                    android:id="@+id/imgLivroLidoCapa"
+                    android:id="@+id/imgLivroLerCapa"
                     android:src="@drawable/pequeno_principe"
                     />
 
@@ -40,12 +43,12 @@
                         android:layout_height="wrap_content"
                         android:text="O pequeno principe  "
                         android:textSize="18sp"
-                        android:id="@+id/txtLivroLidoTitulo" />
+                        android:id="@+id/txtLivroLerTitulo" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtLivroLidoDescricao"
+                        android:id="@+id/txtLivroLerDescricao"
                         android:layout_marginTop="8sp"
                         android:text="@string/pequeno_principe"
                         />
@@ -68,6 +71,6 @@
         </LinearLayout>
 
 
-
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

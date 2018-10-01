@@ -3,6 +3,7 @@ package br.com.senaijandira.mybooks;
 import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
-import br.com.senaijandira.mybooks.model.LivroLido;
 
 public class LivroLidoActivity extends Activity{
 
@@ -28,9 +29,11 @@ public class LivroLidoActivity extends Activity{
 
     LivroLidoAdapter livroLidoAdapter;
 
+    ListView listViewLivrosLidos;
+
     public static Livro[] livros;
 
-    public static char[] statusLivro;
+    public static int[] statusLivro;
 
 
     private MyBooksDatabase myBooksDb;
@@ -41,6 +44,13 @@ public class LivroLidoActivity extends Activity{
         setContentView(R.layout.activity_livro_lido);
 
         //listaLivrosLidos = findViewById(R.id.listaLivrosLidos);
+
+        listViewLivrosLidos = findViewById(R.id.listViewLivrosLidos);
+
+        livroLidoAdapter = new LivroLidoAdapter(this);
+
+        listViewLivrosLidos.setAdapter(livroLidoAdapter);
+
 
         myBooksDb = Room.databaseBuilder(getApplicationContext(), MyBooksDatabase.class, Utils.DATABASE_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
@@ -78,12 +88,7 @@ public class LivroLidoActivity extends Activity{
     }
 
 
-    public void carregarLivrosLidos(){
-        livros = myBooksDb.daoLivro().selecionarTodosLivrosLidos();
 
-        livroLidoAdapter.addAll(livros);
-
-    }
 
     /***********/
 
@@ -95,6 +100,8 @@ public class LivroLidoActivity extends Activity{
     @Override
     protected void onResume() {
         super.onResume();
+
+        carregarLivrosLidos();
 
         //Coloca todos os livros do banco no array livros
        /* livros = myBooksDb.daoLivro().selecionarTodos();
@@ -119,14 +126,21 @@ public class LivroLidoActivity extends Activity{
     }
 
 
+    public void carregarLivrosLidos(){
+        livros = myBooksDb.daoLivro().selecionarTodosLivrosLidos();
+        livroLidoAdapter.clear();
+        livroLidoAdapter.addAll(livros);
+
+    }
+
 
 
     //MÉTODO TESTE
     public void criarLivroLido(final Livro livroLido, View v){//ViewGroup é onde vai ser colocado o novo livro, no caso o LinearLayout listaLivros
 
-        ImageView imgLivroLidoCapa = v.findViewById(R.id.imgLivroCapa);
-        TextView txtLivroLidoTitulo = v.findViewById(R.id.txtLivroTitulo);
-        TextView txtLivroLidoDescricao = v.findViewById(R.id.txtLivroDescricao);
+        ImageView imgLivroLidoCapa = v.findViewById(R.id.imgLivroLidoCapa);
+        TextView txtLivroLidoTitulo = v.findViewById(R.id.txtLivroLidoTitulo);
+        TextView txtLivroLidoDescricao = v.findViewById(R.id.txtLivroLidoDescricao);
 
         //ImageView imgDeleteLivroLido = v.findViewById(R.id.imgDeleteLivro);
 
@@ -137,25 +151,6 @@ public class LivroLidoActivity extends Activity{
         txtLivroLidoTitulo.setText(livroLido.getTitulo());
         txtLivroLidoDescricao.setText(livroLido.getDescricao());
 
-
-
-
-
-/*
-        final View v = LayoutInflater.from(this).inflate(R.layout.livros_lido_layout, root,  false);//carrega o template livro_layout na variavel v
-
-        ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
-        TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
-        TextView txtLivroDescricao = v.findViewById(R.id.txtLivroDescricao);
-
-        imgLivroCapa.setImageBitmap(Utils.toBitmap(livroLido.getCapa()));
-        txtLivroTitulo.setText(livroLido.getTitulo());
-        txtLivroDescricao.setText(livroLido.getDescricao());
-
-        final int idLivro = livroLido.getId();
-
-
-        root.addView(v);*/
     }
 
 
@@ -171,5 +166,33 @@ public class LivroLidoActivity extends Activity{
 
 
         alert.create().show();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void abrirMainActivity(View view) {
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+    public void abrirLivrosLidos(View view2) {
+
+    }
+
+
+    public void abrirLivrosLer(View view3) {
+        startActivity(new Intent(this, LivroLerActivity.class));
     }
 }
