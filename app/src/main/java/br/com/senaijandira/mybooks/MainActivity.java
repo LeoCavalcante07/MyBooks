@@ -124,7 +124,10 @@ public class MainActivity extends AppCompatActivity {
         imgDeleteLivro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deletarLivro(livro);
+                if(livro.getStatusLivro() == 0){
+                    deletarLivro(livro);
+                }
+
             }
         });
 

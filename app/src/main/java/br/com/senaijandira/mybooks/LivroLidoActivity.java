@@ -142,9 +142,15 @@ public class LivroLidoActivity extends Activity{
         TextView txtLivroLidoTitulo = v.findViewById(R.id.txtLivroLidoTitulo);
         TextView txtLivroLidoDescricao = v.findViewById(R.id.txtLivroLidoDescricao);
 
-        //ImageView imgDeleteLivroLido = v.findViewById(R.id.imgDeleteLivro);
+        ImageView imgDeleteLivroLido = v.findViewById(R.id.imgDeleteLivro);
 
-
+        imgDeleteLivroLido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                livroLido.setStatusLivro(0);
+                myBooksDb.daoLivro().atualizar(livroLido);
+            }
+        });
 
 
         imgLivroLidoCapa.setImageBitmap(Utils.toBitmap(livroLido.getCapa()));

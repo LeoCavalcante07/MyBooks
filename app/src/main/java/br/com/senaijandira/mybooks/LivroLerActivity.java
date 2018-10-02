@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import br.com.senaijandira.mybooks.adapter.LivroLerAdapter;
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
@@ -56,14 +58,6 @@ public class LivroLerActivity extends Activity {
 
 
 
-
-
-
-
-
-
-
-
     public void abrirMainActivity(View view) {
         startActivity(new Intent(this, MainActivity.class));
     }
@@ -76,5 +70,6 @@ public class LivroLerActivity extends Activity {
     public void abrirLivrosLer(View view3) {
 
     }
+
 
 }

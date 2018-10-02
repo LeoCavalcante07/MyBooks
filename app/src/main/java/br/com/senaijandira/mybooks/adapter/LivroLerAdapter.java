@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import br.com.senaijandira.mybooks.LivroLerActivity;
+import br.com.senaijandira.mybooks.LivroLidoActivity;
 import br.com.senaijandira.mybooks.R;
 import br.com.senaijandira.mybooks.Utils;
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
@@ -53,17 +55,30 @@ public class LivroLerAdapter extends ArrayAdapter<Livro>{
 
 
 
-    public void criarLivroLer(Livro livroLer, View v){
+    public void criarLivroLer(final Livro livroLer, View v){
         ImageView imgLivroLerCapa = v.findViewById(R.id.imgLivroLerCapa);
         TextView txtLivroLerDesc = v.findViewById(R.id.txtLivroLerDescricao);
         TextView txtLivroLerTitulo = v.findViewById(R.id.txtLivroLerTitulo);
 
+
+        ImageView imgDelete = v.findViewById(R.id.imgDeleteLivroLer);
+        imgDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                livroLer.setStatusLivro(0);
+                myBooksDatabase.daoLivro().atualizar(livroLer);
+
+
+            }
+        });
 
         imgLivroLerCapa.setImageBitmap(Utils.toBitmap(livroLer.getCapa()));
         txtLivroLerDesc.setText(livroLer.getDescricao());
         txtLivroLerTitulo.setText(livroLer.getTitulo());
 
     }
+
+
 }
 
 
