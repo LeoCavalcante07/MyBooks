@@ -191,17 +191,19 @@ public class MainActivity extends AppCompatActivity {
 
     //MÉTODO QUE ATUALIZA O STATUS DO LIVRO, PARA SABERMOS SE ELE ESTA PARA SER LIDO OU SE JÁ FOI LIDO
     private void atualizarStatusLivro(Livro livro, int opt){
-
+    String mensagem;
         if(opt == 1){
             if(livro.getStatusLivro() == 2){
-                alert(livro, "Erro", "Não é possivel adicionar um livro já lido para a tela de livros para ler", "Mudar mesmo assim", "Cancelar", 2);
+                mensagem  = "Isso fará com que o livro "+livro.getTitulo()+" saia da lista de livros lidos. Deseja continuar?";
+                alertAtualizarStatus(livro,2, mensagem);
             }else{
                 livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido*/
             }
 
         }else if(opt == 2){
             if(livro.getStatusLivro() == 1){
-                alert(livro,"Erro", "Você deseja marcar o livro '"+livro.getTitulo()+"' como lido? Isso fará com que ele saia da lista de livros para ler", "OK", null, 1);
+                mensagem  = "Deseja marcar o livro "+livro.getTitulo()+" como lido? Isso fará com que ele saia da lista de livros para ler.";
+                alertAtualizarStatus(livro,1, mensagem);
             }else{
                 livro.setStatusLivro(2);//com status 2 sabemos que o livro ja foi lido
             }
@@ -237,46 +239,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-    // o metodo recebe um objeto do tipo livro pois o usuario podera mudar o status do livro, caso ele queira
-    public void alert(final Livro livro, String titulo, String mensagem, final String positive, final String negative, final int statusAtual){
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        alertDialogBuilder.setTitle(titulo);
-        alertDialogBuilder.setMessage(mensagem);
-
-        //caso o usuario queira forçar a mudança do status do livro entra aqui
-        alertDialogBuilder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
-
-
-            public void onClick(final DialogInterface dialog, int which) {
-                String mensagem;
-                if(statusAtual == 1){
-                    mensagem  = "Isso fará com que o livro "+livro.getTitulo()+" saia da lista de livros para ler. Deseja continuar?";
-                }else{
-                    mensagem  = "Isso fará com que o livro "+livro.getTitulo()+" saia da lista de livros lidos. Deseja continuar?";
-                }
-
-                alertAtualizarStatus(livro, statusAtual, mensagem);
-            }
-        });
-
-        alertDialogBuilder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        alertDialogBuilder.show();
-    }
-
-
     public void alertAtualizarStatus(final Livro livro, final int statusAtual, String mensagem){
         final AlertDialog.Builder alertAtualizar = new AlertDialog.Builder(this);
         alertAtualizar.setTitle("Atenção!");
         alertAtualizar.setMessage(mensagem);
+        alertAtualizar.setCancelable(false);
 
         alertAtualizar.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
