@@ -194,14 +194,14 @@ public class MainActivity extends AppCompatActivity {
 
         if(opt == 1){
             if(livro.getStatusLivro() == 2){
-                alert(livro, "Erro", "Não é possivel adicionar um livro já lido para a tela de livros para ler", "Mudar mesmo assim", "Cancelar");
+                alert(livro, "Erro", "Não é possivel adicionar um livro já lido para a tela de livros para ler", "Mudar mesmo assim", "Cancelar", 2);
             }else{
-                livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido
+                livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido*/
             }
 
         }else if(opt == 2){
             if(livro.getStatusLivro() == 1){
-                alert(livro,"Erro", "Não é possivel adicionar um livro já lido para a tela de livros para ler", "OK", null);
+                alert(livro,"Erro", "Você deseja marcar o livro '"+livro.getTitulo()+"' como lido? Isso fará com que ele saia da lista de livros para ler", "OK", null, 1);
             }else{
                 livro.setStatusLivro(2);//com status 2 sabemos que o livro ja foi lido
             }
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // o metodo recebe um objeto do tipo livro pois o usuario podera mudar o status do livro, caso ele queira
-    public void alert(final Livro livro, String titulo, String mensagem, final String positive, final String negative){
+    public void alert(final Livro livro, String titulo, String mensagem, final String positive, final String negative, final int statusAtual){
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
         alertDialogBuilder.setTitle(titulo);
@@ -251,28 +251,14 @@ public class MainActivity extends AppCompatActivity {
 
 
             public void onClick(final DialogInterface dialog, int which) {
+                String mensagem;
+                if(statusAtual == 1){
+                    mensagem  = "Isso fará com que o livro "+livro.getTitulo()+" saia da lista de livros para ler. Deseja continuar?";
+                }else{
+                    mensagem  = "Isso fará com que o livro "+livro.getTitulo()+" saia da lista de livros lidos. Deseja continuar?";
+                }
 
-                alert(livro, "Atenção", "Isso fará com que o livro saia da lista de livros lidos. Deseja continuar?", "Continuar", "Cancelar");
-
-                //caso o usuario confirme a mudança do status,  entra aqui
-                alertDialogBuilder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialogInterface, int wich) {
-                        livro.setStatusLivro(1);
-                    }
-                });
-
-
-                //caso  o usuario mude de ideia e queria cancelar a mudança de status
-                alertDialogBuilder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int wich) {
-                        //dialogInterface.dismiss();
-                        livro.setStatusLivro(1);
-                    }
-                });
-
-
+                alertAtualizarStatus(livro, statusAtual, mensagem);
             }
         });
 
@@ -284,6 +270,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alertDialogBuilder.show();
+    }
+
+
+    public void alertAtualizarStatus(final Livro livro, final int statusAtual, String mensagem){
+        final AlertDialog.Builder alertAtualizar = new AlertDialog.Builder(this);
+        alertAtualizar.setTitle("Atenção!");
+        alertAtualizar.setMessage(mensagem);
+
+        alertAtualizar.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(statusAtual == 1){
+                    livro.setStatusLivro(2);
+                }else{
+                    livro.setStatusLivro(1);
+                }
+
+                myBooksDb.daoLivro().atualizar(livro);
+            }
+        });
+
+        alertAtualizar.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+
+        alertAtualizar.show();
+
     }
 
 }
