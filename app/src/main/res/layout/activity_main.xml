@@ -7,33 +7,63 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/menu_layout">
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/menuTab">
 
-    </include>
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemLivro"
+            android:text="Livro"
+           />
 
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemLivroLer"
+            android:text="Ler"/>
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemLivroLido"
+            android:text="Lido"/>
+
+    </android.support.design.widget.TabLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frameLayout">
+
+
+
+
+    </FrameLayout>
+
+
+    <!--
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/listViewLivros">
 
-
-        </ListView>
 
     </LinearLayout>
 
+    -->
 
 
 
 
 
     <!-- o pipe | serve para juntar os negocios-->
-    <!-- <android.support.design.widget.FloatingActionButton
+        <!--<android.support.design.widget.FloatingActionButton
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_margin="16dp"
@@ -44,7 +74,7 @@
          android:onClick="abrirCadastro"
          />-->
 
-    <Button
+        <Button
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="450dp"
@@ -52,7 +82,7 @@
         android:text="+"
         android:textSize="20dp"
         android:onClick="abrirCadastro"
-        />
+        />-->
 
 
 

@@ -18,19 +18,17 @@ import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
 
 /**
- * Created by 17259211 on 01/10/2018.
+ * Created by 17259211 on 08/10/2018.
  */
 
-public class LivroLerAdapter extends ArrayAdapter<Livro>{
+public class LivroLidoAdapter extends ArrayAdapter<Livro> {
 
-    MyBooksDatabase myBooksDatabase;//injeção de dependencia
+    MyBooksDatabase myBooksDb;
 
-
-                                                //injeção de dependencia
-    public LivroLerAdapter(Context contexto, MyBooksDatabase myBooksDatabase){
+    public LivroLidoAdapter(Context contexto, MyBooksDatabase myBooksDb){
         super(contexto, 0, new ArrayList<Livro>());
 
-        this.myBooksDatabase = myBooksDatabase;//injeção de dependencia
+        this.myBooksDb = myBooksDb;
     }
 
     @NonNull
@@ -39,47 +37,39 @@ public class LivroLerAdapter extends ArrayAdapter<Livro>{
         View v = convertView;
 
         if(v == null){
+            //v = LayoutInflater.from(getContext()).inflate(R.layout.livro_lido_layout, parent, false);
             v = LayoutInflater.from(getContext()).inflate(R.layout.livro_ler_layout, parent, false);
         }
 
-        Livro livroLer = getItem(position);
+        Livro livroLido = getItem(position);
 
-        criarLivroLer(livroLer, v);
-
-
+        criarLivroLido(livroLido, v);
 
         return v;
     }
 
 
 
-    public void criarLivroLer(final Livro livroLer, View v){
-        ImageView imgLivroLerCapa = v.findViewById(R.id.imgLivroLerCapa);
-        TextView txtLivroLerDesc = v.findViewById(R.id.txtLivroLerDescricao);
-        TextView txtLivroLerTitulo = v.findViewById(R.id.txtLivroLerTitulo);
-
+    public void criarLivroLido(final Livro livroLido, View v){
+        ImageView imgLivroCapa = v.findViewById(R.id.imgLivroLerCapa);
+        //TextView txtTitulo = v.findViewById(R.id.txtTitulo);
+        TextView txtLivroDesc = v.findViewById(R.id.txtLivroLerDescricao);
+        TextView txtLivroTitulo = v.findViewById(R.id.txtLivroLerTitulo);
 
         ImageView imgDelete = v.findViewById(R.id.imgDeleteLivroLer);
         imgDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                livroLer.setStatusLivro(0);
-                myBooksDatabase.daoLivro().atualizar(livroLer);
-
-                remove(livroLer);
-
-
+                livroLido.setStatusLivro(0);
+                myBooksDb.daoLivro().atualizar(livroLido);
+                remove(livroLido);
 
             }
         });
 
-        imgLivroLerCapa.setImageBitmap(Utils.toBitmap(livroLer.getCapa()));
-        txtLivroLerDesc.setText(livroLer.getDescricao());
-        txtLivroLerTitulo.setText(livroLer.getTitulo());
+        imgLivroCapa.setImageBitmap(Utils.toBitmap(livroLido.getCapa()));
+        txtLivroDesc.setText(livroLido.getDescricao());
+        txtLivroTitulo.setText(livroLido.getTitulo());
 
     }
-
-
 }
-
-

@@ -24,6 +24,10 @@ public interface LivroDao {
     @Query("select * from livro")
     Livro[] selecionarTodos();
 
+
+    @Query("select * from livro where id = :idLivro")
+    Livro selecionarLivroId(int idLivro);
+
     //saber qual o status do livro
     @Query("select statusLivro from livro")
     char[] selecionarStatus();
