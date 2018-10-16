@@ -38,7 +38,7 @@ public class LivroLidoAdapter extends ArrayAdapter<Livro> {
 
         if(v == null){
             //v = LayoutInflater.from(getContext()).inflate(R.layout.livro_lido_layout, parent, false);
-            v = LayoutInflater.from(getContext()).inflate(R.layout.livro_ler_layout, parent, false);
+            v = LayoutInflater.from(getContext()).inflate(R.layout.livro_lido_layout, parent, false);
         }
 
         Livro livroLido = getItem(position);

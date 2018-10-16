@@ -26,11 +26,11 @@
                     android:layout_width="100dp"
                     android:layout_height="150dp"
                     android:layout_marginRight="15dp"
-                    android:id="@+id/imgLivroCapa"
+                    android:id="@+id/imgLivroLerCapa"
                     android:src="@drawable/pequeno_principe"
                     />
 
-
+                <!-- layout_weight -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -43,77 +43,29 @@
                         android:layout_height="wrap_content"
                         android:text="O pequeno principe  "
                         android:textSize="18sp"
-                        android:id="@+id/txtLivroTitulo" />
+                        android:id="@+id/txtLivroLerTitulo" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtLivroDescricao"
+                        android:id="@+id/txtLivroLerDescricao"
                         android:layout_marginTop="8sp"
                         android:text="@string/pequeno_principe"
                         />
 
                 </LinearLayout>
 
-
-                <LinearLayout
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:src="@drawable/baseline_delete_black_18dp"
-                        android:id="@+id/imgDeleteLivro"
-
-                        />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/edit"
-                        android:id="@+id/imgEdit"
-
-
-                        />
-
-
-                </LinearLayout>
-
-
+                    android:src="@drawable/baseline_delete_black_18dp"
+                    android:id="@+id/imgDeleteLivroLer"
+                    android:onClick="removerLivroLer"
+                    />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="160dp"
-                android:layout_marginBottom="15dp"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Quero ler"
-                    android:id="@+id/txtLivrosParaLer"
-                    android:textColor="@color/colorPrimary"
 
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Já li"
-                    android:textColor="@color/colorPrimary"
-                    android:id="@+id/txtLivroLido"
-                    android:layout_marginLeft="40dp"
-                    />
-
-
-
-            </LinearLayout>
 
 
 
