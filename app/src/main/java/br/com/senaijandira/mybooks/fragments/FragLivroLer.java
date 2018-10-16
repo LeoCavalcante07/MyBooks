@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import br.com.senaijandira.mybooks.Login;
 import br.com.senaijandira.mybooks.R;
 import br.com.senaijandira.mybooks.Utils;
 import br.com.senaijandira.mybooks.adapter.LivroLerAdapter;
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
+import br.com.senaijandira.mybooks.model.Usuario;
 
 public class FragLivroLer extends Fragment {
 
@@ -23,6 +25,8 @@ public class FragLivroLer extends Fragment {
     ListView listViewLivros;
 
     public static Livro[] livros;
+
+    Usuario usuarioLogado;
 
     private MyBooksDatabase myBooksDb;
 
@@ -34,6 +38,7 @@ public class FragLivroLer extends Fragment {
 
         v = inflater.inflate(R.layout.fragment_livro, container, false);
 
+        usuarioLogado = Login.usuarioLogado;
 
 
 
@@ -67,7 +72,7 @@ public class FragLivroLer extends Fragment {
 
     public void carregarLivros(){
         //Aqui faz um select no banco
-        livros = myBooksDb.daoLivro().selecionarTodosLivroLer();
+        livros = myBooksDb.daoLivro().selecionarTodosLivroLer(usuarioLogado.getId());
         livroAdapter.clear();
         livroAdapter.addAll(livros);
     }

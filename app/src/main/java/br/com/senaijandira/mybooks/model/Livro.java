@@ -2,6 +2,7 @@ package br.com.senaijandira.mybooks.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity
@@ -17,6 +18,9 @@ public class Livro {
     private String descricao;
     private int statusLivro; //se 0 o livro não é nem lido nem para ler, se 1, o livro é para ler e se 2 o livro é lido
 
+    @ForeignKey(entity = Usuario.class, childColumns = "usuarioLivro", parentColumns = "id")
+    private int usuarioLivro;
+
 
 
     //Construtor
@@ -25,13 +29,14 @@ public class Livro {
     }
 
     //Construtor
-    public Livro(int id, byte[] capa, String titulo, String descricao, int statusLivro){
+    public Livro(int id, byte[] capa, String titulo, String descricao, int statusLivro, int usuarioLivro){
 
         this.id = id;
         this.capa = capa;
         this.titulo = titulo;
         this.descricao = descricao;
         this.statusLivro = statusLivro;
+        this.usuarioLivro = usuarioLivro;
 
     }
 
@@ -77,5 +82,13 @@ public class Livro {
 
     public void setStatusLivro(int statusLivro) {
         this.statusLivro = statusLivro;
+    }
+
+    public  int getUsuarioLivro(){
+        return usuarioLivro;
+    }
+
+    public  void setUsuarioLivro(int usuarioLivro){
+        this.usuarioLivro = usuarioLivro;
     }
 }

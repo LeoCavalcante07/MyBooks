@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.model.Livro;
+import br.com.senaijandira.mybooks.model.Usuario;
 
 public class  CadastroActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class  CadastroActivity extends AppCompatActivity {
     ImageView imgLivroCapa;
     EditText txtTitulo, txtDescricao;
     Button btnSalvar;
+
+    Usuario usuarioLogado;
 
 
     private final int COD_REQ_GALERY = 101;
@@ -37,6 +40,7 @@ public class  CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+        usuarioLogado= Login.usuarioLogado;
 
         myBooksDb = Room.databaseBuilder(getApplicationContext(), MyBooksDatabase.class, Utils.DATABASE_NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
@@ -63,7 +67,7 @@ public class  CadastroActivity extends AppCompatActivity {
             btnSalvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    salvarLivro(livro);
+                    salvarLivro(livro, null);
                 }
             });
 
@@ -72,10 +76,13 @@ public class  CadastroActivity extends AppCompatActivity {
 
             final Livro livro = new Livro();
 
+
+            //livro.setUsuarioLivro(usuarioLogado.getId());
+
             btnSalvar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    salvarLivro(livro);
+                    salvarLivro(livro, usuarioLogado.getId());
                 }
             });
         }
@@ -125,10 +132,10 @@ public class  CadastroActivity extends AppCompatActivity {
     }
 
 
-    public void salvarLivro(@Nullable Livro livro) {
+    public void salvarLivro(@Nullable Livro livro, @Nullable Integer idUsuario) {
 
 
-            //Ao salvar o livro que acabou de ser cadastrado cria-se um novo livro
+        //Ao salvar o livro que acabou de ser cadastrado cria-se um novo livro
 
 
         if(imgLivroCapa == null || txtDescricao.getText().toString().equals("") || txtTitulo.getText().toString().equals("")){
@@ -136,7 +143,7 @@ public class  CadastroActivity extends AppCompatActivity {
         }else{
 
 
-           // livroCapa = Utils.toBitmap(imgLivroCapa);
+            // livroCapa = Utils.toBitmap(imgLivroCapa);
 
             byte[] capa = Utils.toByteArray(livroCapa);
             String titulo = txtTitulo.getText().toString();
@@ -162,6 +169,7 @@ public class  CadastroActivity extends AppCompatActivity {
                 livro.setCapa(capa);
                 livro.setTitulo(titulo);
                 livro.setDescricao(descricao);
+                livro.setUsuarioLivro(usuarioLogado.getId());
 
                 myBooksDb.daoLivro().inserir(livro);
                 alert("Pronto", "Livro Cadastrado com sucesso", "OK", null);

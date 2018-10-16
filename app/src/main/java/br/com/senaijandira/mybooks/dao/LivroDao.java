@@ -11,7 +11,7 @@ import br.com.senaijandira.mybooks.model.Livro;
 @Dao  //indica que a classe é um Dao
 public interface LivroDao {
 
-    @Insert
+@Insert
     void inserir(Livro livro);
 
     @Update
@@ -21,8 +21,9 @@ public interface LivroDao {
     @Delete
     void deletar(Livro livro);
 
-    @Query("select * from livro")
-    Livro[] selecionarTodos();
+    @Query("select * from livro where usuarioLivro = :idUsuario")
+//    Livro[] selecionarTodos(int idUsuario);
+    Livro[] selecionarTodos(int idUsuario);
 
 
     @Query("select * from livro where id = :idLivro")
@@ -33,9 +34,9 @@ public interface LivroDao {
     char[] selecionarStatus();
 
     //SEELCIONAR TODOS LIVROS LIDOS
-    @Query("select * from livro where statusLivro = 2")
-    Livro[] selecionarTodosLivrosLidos();
+    @Query("select * from livro where statusLivro = 2 and usuarioLivro = :idUsuario")
+    Livro[] selecionarTodosLivrosLidos(int idUsuario);
 
-    @Query("select * from livro where statusLivro = 1")
-    Livro[] selecionarTodosLivroLer();
+    @Query("select * from livro where statusLivro = 1 and usuarioLivro = :idUsuario")
+    Livro[] selecionarTodosLivroLer(int idUsuario);
 }

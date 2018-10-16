@@ -16,16 +16,21 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import br.com.senaijandira.mybooks.CadastroActivity;
+import br.com.senaijandira.mybooks.Login;
 import br.com.senaijandira.mybooks.R;
 import br.com.senaijandira.mybooks.Utils;
 import br.com.senaijandira.mybooks.db.MyBooksDatabase;
 import br.com.senaijandira.mybooks.fragments.FragLivro;
 import br.com.senaijandira.mybooks.model.Livro;
+import br.com.senaijandira.mybooks.model.Usuario;
 
 public class LivroAdapter extends ArrayAdapter<Livro> {
     FragLivro fragLivro;
 
     MyBooksDatabase myBooksDb;
+
+
+
 
     public LivroAdapter(Context context, MyBooksDatabase myBooksDb){
         super(context, 0, new ArrayList<Livro>());
@@ -56,6 +61,8 @@ public class LivroAdapter extends ArrayAdapter<Livro> {
 
 
     public void criarLivro(final Livro livro, View v){
+
+
 
         ImageView imgLivroCapa = v.findViewById(R.id.imgLivroCapa);
         TextView txtLivroTitulo = v.findViewById(R.id.txtLivroTitulo);
@@ -157,6 +164,8 @@ public class LivroAdapter extends ArrayAdapter<Livro> {
             if(livro.getStatusLivro() == 2){
                 mensagem  = "Isso fará com que o livro "+livro.getTitulo()+" saia da lista de livros lidos. Deseja continuar?";
                 alertAtualizarStatus(livro,2, mensagem);
+            }else if(livro.getStatusLivro() == 1){
+                alert("Aviso", "O livro já está ma lista de livros lidos");
             }else{
                 livro.setStatusLivro(1);//com status 1 sabemos que o livro está para ser lido*/
             }
@@ -165,6 +174,8 @@ public class LivroAdapter extends ArrayAdapter<Livro> {
             if(livro.getStatusLivro() == 1){
                 mensagem  = "Deseja marcar o livro "+livro.getTitulo()+" como lido? Isso fará com que ele saia da lista de livros para ler.";
                 alertAtualizarStatus(livro,1, mensagem);
+            }else if(livro.getStatusLivro() == 2){
+                alert("Aviso", "O livro já está na lista de livros lidos");
             }else{
                 livro.setStatusLivro(2);//com status 2 sabemos que o livro ja foi lido
             }
