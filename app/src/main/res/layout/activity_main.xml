@@ -45,24 +45,22 @@
     </FrameLayout>
 
 
-
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="400dp"
-        android:src="@drawable/sair"
-        android:tint="#FFF"
-        android:onClick="sair"
-        />
-
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
+        android:onClick="sair"
+        android:backgroundTint="@color/black"
+        android:src="@drawable/sair"
+        android:tint="#FFF" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="300dp"
         app:srcCompat="@android:drawable/ic_input_add"
+        android:backgroundTint="@color/black"
         android:tint="#FFF"
         android:onClick="abrirCadastro"
         />

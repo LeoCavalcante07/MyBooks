@@ -14,6 +14,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             android:text="Cadastro de Usuários"
             android:textColor="@color/white"
             android:textSize="25sp"/>
@@ -111,6 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cadastrar"
+            android:layout_marginTop="50dp"
             android:background="@color/white"
             android:textColor="@color/black"
             android:id="@+id/btnGravar"

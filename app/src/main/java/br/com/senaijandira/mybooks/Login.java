@@ -80,10 +80,32 @@ public class Login extends Activity {
             usuarioLogado = usuarios[0];
 
             startActivity(new Intent(this, MainActivity.class));
+        }else{
+            alert("Atenção!", "Usuário ou senha inexistente.", "OK", null);
         }
     }
 
 
+    public void alert(String titulo, String mensagem, String positive, String negative){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setTitle(titulo);
+        alertDialogBuilder.setMessage(mensagem);
+        alertDialogBuilder.setPositiveButton(positive, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton(negative, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
 
 
 }
